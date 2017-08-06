@@ -23,7 +23,7 @@ mod-list:
 # %player% - The player using disallowed mods
 # %mods% - All the mods the player is using
 # %disallowed_mods% - The disallowed mods the player is using
-disallowed-mods-command:
+disallowed-mods-commands:
 - "kick %player% &cIllegal Mods - %disallowed_mods%"
 
 

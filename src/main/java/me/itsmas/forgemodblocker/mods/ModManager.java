@@ -39,7 +39,7 @@ public class ModManager
         this.modList = plugin.getConfig("mod-list", new ArrayList<>());
         this.disallowedCommands = new ArrayList<>();
 
-        List<String> disallowedCommands = plugin.getConfig("disallowed-mods-command", "kick %player% &cIllegal Mods - %disallowed_mods%");
+        List<String> disallowedCommands = plugin.getConfig("disallowed-mods-commands", "kick %player% &cIllegal Mods - %disallowed_mods%");
         disallowedCommands.forEach(command -> this.disallowedCommands.add(C.colour(command)));
     }
 

@@ -45,7 +45,7 @@ public class Updater
     {
         this.plugin = plugin;
 
-        // checkUpdates();
+        checkUpdates();
         announceUpdates();
     }
 

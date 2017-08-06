@@ -1,0 +1,23 @@
+# The prefix to use for messages
+# Supports colour codes
+prefix: "&c[&6FMB&c]&e"
+
+# The mode the plugin should run in
+# whitelist: Players who join with any mods not on the mod-list will be flagged
+# blacklist: Players who use any mods on the mod-list will be flagged
+mode: blacklist
+
+# The list of mods to whitelist or blacklist
+# You must use the mod ID of the mods you wish to use on this list
+# To find a mod ID, open Forge with the mod installed, click "Mods" on the title screen, find the mod and look at the "modid" field
+mod-list:
+- examplemod
+
+# The commands to execute when a player joins with disallowed mods
+# Supports colour codes
+# Placeholders:
+# %player% - The player using disallowed mods
+# %mods% - All the mods the player is using
+# %disallowed_mods% - The disallowed mods the player is using
+disallowed-mods-command:
+- "kick %player% &cIllegal Mods - %disallowed_mods%"

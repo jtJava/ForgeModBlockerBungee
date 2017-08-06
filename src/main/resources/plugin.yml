@@ -1,0 +1,8 @@
+name: ForgeModBlocker
+version: 1.0
+author: Mas281
+
+main: me.itsmas.forgemodblocker.ForgeModBlocker
+
+softdepend: [PlaceholderAPI]
+depend: [ProtocolLib]

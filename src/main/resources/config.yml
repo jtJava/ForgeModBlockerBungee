@@ -13,7 +13,7 @@ mode: blacklist
 
 # The list of mods to whitelist or blacklist
 # You must use the mod ID of the mods you wish to use on this list
-# To find a mod ID, open Forge with the mod installed, click "Mods" on the title screen, find the mod and look at the "modid" field
+# To find a mod ID, open Forge with the mod installed, click "Mods" on the title screen, find the mod and look at the "Mod ID" field
 mod-list:
 - examplemod
 
@@ -25,3 +25,5 @@ mod-list:
 # %disallowed_mods% - The disallowed mods the player is using
 disallowed-mods-command:
 - "kick %player% &cIllegal Mods - %disallowed_mods%"
+
+

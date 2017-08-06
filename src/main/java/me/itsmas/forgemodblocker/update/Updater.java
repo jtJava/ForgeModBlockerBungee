@@ -54,7 +54,9 @@ public class Updater
      */
     private void checkUpdates()
     {
-        int currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replace("\\.", ""));
+        int currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replaceAll("\\.", ""));
+
+        Bukkit.broadcastMessage("cur version: " + currentVersion);
 
         new BukkitRunnable()
         {
@@ -76,7 +78,7 @@ public class Updater
                 JsonObject latestUpdate = updateArray.get(0).getAsJsonObject();
 
                 String versionName = latestVersion.get("name").getAsString();
-                int version = Integer.parseInt(versionName.replace("\\.", ""));
+                int version = Integer.parseInt(versionName.replaceAll("\\.", ""));
 
                 if (version > currentVersion)
                 {

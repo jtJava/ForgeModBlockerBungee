@@ -65,7 +65,7 @@ public class ModManager
          */
         public boolean isAllowed(String mod, List<String> modList)
         {
-            if (mod.equals("FML") || mod.equals("MCP") || mod.equals("Forge"))
+            if (mod.equals("FML") || mod.equals("mcp") || mod.equals("Forge"))
             {
                 return true;
             }

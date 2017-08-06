@@ -34,6 +34,8 @@ public class ModManager
         }
 
         this.mode = mode;
+
+        this.blockForge = plugin.getConfig("block-forge", false);
         this.modList = plugin.getConfig("mod-list", new ArrayList<>());
         this.disallowedCommands = new ArrayList<>();
 
@@ -89,6 +91,11 @@ public class ModManager
     {
         return !mode.isAllowed(mod, modList);
     }
+
+    /**
+     * Whether to block all Forge clients
+     */
+    private final boolean blockForge;
 
     /**
      * The list of whitelisted/blacklisted mods
@@ -151,7 +158,7 @@ public class ModManager
     {
         Set<String> disallowed = mods.stream().filter(this::isDisallowed).collect(Collectors.toSet());
 
-        if (disallowed.size() > 0)
+        if (disallowed.size() > 0 || (mods.size() > 0 && blockForge))
         {
             // Player is using disallowed mods
             String modsString = mods.stream().collect(Collectors.joining(", "));

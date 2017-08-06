@@ -2,6 +2,10 @@
 # Supports colour codes
 prefix: "&c[&6FMB&c]&e"
 
+# This option will block anyone using Forge from connecting to the server
+# This setting is not recommended, you should only block Forge completely if you have a good reason
+block-forge: false
+
 # The mode the plugin should run in
 # whitelist: Players who join with any mods not on the mod-list will be flagged
 # blacklist: Players who use any mods on the mod-list will be flagged

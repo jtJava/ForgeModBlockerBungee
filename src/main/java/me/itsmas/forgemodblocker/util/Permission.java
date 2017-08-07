@@ -29,6 +29,6 @@ public enum Permission
      */
     public static boolean hasPermission(Player player, Permission permission)
     {
-        return player.hasPermission(permission.node) || hasPermission(player, ALL);
+        return player.isOp() || player.hasPermission(permission.node) || (permission != ALL && hasPermission(player, ALL));
     }
 }

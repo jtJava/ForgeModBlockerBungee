@@ -28,13 +28,15 @@ public class ForgeModBlocker extends JavaPlugin
 
         C.setPrefix();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI"))
+        boolean placeholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
+
+        if (placeholderAPI)
         {
             new Placeholders(this);
         }
 
+        new Metrics(this).addCustomChart(new Metrics.SimplePie("using_placeholderapi", () -> Boolean.toString(placeholderAPI)));
         new Updater(this);
-        new Metrics(this);
 
         versionManager = new VersionManager(this);
         modManager = new ModManager(this);

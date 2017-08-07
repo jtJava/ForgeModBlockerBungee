@@ -12,8 +12,10 @@ import java.net.URL;
 /**
  * Web utility methods
  */
-public class UtilHttp
+public final class UtilHttp
 {
+    private UtilHttp(){}
+
     /**
      * The user agent
      */

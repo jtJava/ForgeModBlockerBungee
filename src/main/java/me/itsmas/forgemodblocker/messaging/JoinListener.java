@@ -4,7 +4,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import me.itsmas.forgemodblocker.ForgeModBlocker;
 import me.itsmas.forgemodblocker.util.UtilPacket;
 import me.itsmas.forgemodblocker.util.UtilServer;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,8 +25,7 @@ public class JoinListener implements Listener
     {
         this.plugin = plugin;
 
-        Bukkit.getPluginManager().registerEvents(this, plugin);
-
+        UtilServer.registerListener(this);
         UtilServer.registerOutgoingChannel("FML|HS");
     }
 

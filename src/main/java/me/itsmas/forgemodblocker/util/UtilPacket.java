@@ -10,8 +10,10 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Packet utility methods
  */
-public class UtilPacket
+public final class UtilPacket
 {
+    private UtilPacket(){}
+
     /**
      * Creates a PacketPlayOutCustomPayload packet with the given data
      *

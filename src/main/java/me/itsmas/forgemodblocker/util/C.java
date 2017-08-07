@@ -6,8 +6,10 @@ import org.bukkit.ChatColor;
 /**
  * Chat and formatting utilities
  */
-public class C
+public final class C
 {
+    private C(){}
+
     /**
      * The plugin prefix
      */

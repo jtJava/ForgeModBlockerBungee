@@ -3,6 +3,7 @@ package me.itsmas.forgemodblocker.versions;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import me.itsmas.forgemodblocker.ForgeModBlocker;
+import me.itsmas.forgemodblocker.util.Logs;
 import me.itsmas.forgemodblocker.util.UtilServer;
 import org.bukkit.Bukkit;
 
@@ -41,8 +42,8 @@ public class VersionManager
         {
             ex.printStackTrace();
 
-            plugin.getLogger().severe("Could nto found required PacketDataSerializer class");
-            plugin.getLogger().severe("Disabling plugin");
+            Logs.severe("Could nto found required PacketDataSerializer class");
+            Logs.severe("Disabling plugin");
 
             Bukkit.getPluginManager().disablePlugin(plugin);
             return;

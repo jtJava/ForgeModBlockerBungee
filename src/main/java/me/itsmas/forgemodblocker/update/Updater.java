@@ -5,15 +5,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.itsmas.forgemodblocker.ForgeModBlocker;
 import me.itsmas.forgemodblocker.util.C;
+import me.itsmas.forgemodblocker.util.Logs;
 import me.itsmas.forgemodblocker.util.Permission;
 import me.itsmas.forgemodblocker.util.UtilHttp;
-import org.bukkit.Bukkit;
+import me.itsmas.forgemodblocker.util.UtilServer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Scans for available plugin updates
  */
-public class Updater
+public class Updater implements Listener
 {
     /**
      * Spiget API query URLs
@@ -37,7 +42,7 @@ public class Updater
     private final ForgeModBlocker plugin;
 
     /**
-     * Update data
+     * Latest update data
      */
     private Object[] data;
 
@@ -45,71 +50,125 @@ public class Updater
     {
         this.plugin = plugin;
 
-        checkUpdates();
-        announceUpdates();
-    }
+        UtilServer.registerListener(this);
 
-    /**
-     * Periodically checks for updates
-     */
-    private void checkUpdates()
-    {
-        int currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replaceAll("\\.", ""));
-
-        Bukkit.broadcastMessage("cur version: " + currentVersion);
+        currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replaceAll("\\.", ""));
 
         new BukkitRunnable()
         {
             @Override
             public void run()
             {
-                JsonElement versionElement = UtilHttp.getJsonFromUrl(RESOURCE_VERSIONS);
-                JsonElement updateElement = UtilHttp.getJsonFromUrl(RESOURCE_UPDATES);
-
-                if (versionElement == null || updateElement == null)
+                if (checkUpdates())
                 {
-                    return;
-                }
-
-                JsonArray versionArray = versionElement.getAsJsonArray();
-                JsonArray updateArray = updateElement.getAsJsonArray();
-
-                JsonObject latestVersion = versionArray.get(0).getAsJsonObject();
-                JsonObject latestUpdate = updateArray.get(0).getAsJsonObject();
-
-                String versionName = latestVersion.get("name").getAsString();
-                int version = Integer.parseInt(versionName.replaceAll("\\.", ""));
-
-                if (version > currentVersion)
-                {
-                    String updateTitle = latestUpdate.get("title").getAsString();
-
-                    data = new Object[] {versionName, updateTitle};
+                    cancel();
                 }
             }
         }.runTaskTimerAsynchronously(plugin, UPDATE_CHECK_DELAY, UPDATE_CHECK_INTERVAL);
     }
 
     /**
+     * The current plugin version
+     */
+    private final int currentVersion;
+
+    /**
+     * Periodically checks for updates
+     *
+     * @return Whether an update was found
+     */
+    private boolean checkUpdates()
+    {
+        Logs.info("Checking for updates...");
+
+        JsonElement versionElement = UtilHttp.getJsonFromUrl(RESOURCE_VERSIONS);
+        JsonElement updateElement = UtilHttp.getJsonFromUrl(RESOURCE_UPDATES);
+
+        if (versionElement == null || updateElement == null)
+        {
+            return false;
+        }
+
+        JsonArray versionArray = versionElement.getAsJsonArray();
+        JsonArray updateArray = updateElement.getAsJsonArray();
+
+        JsonObject latestVersion = versionArray.get(0).getAsJsonObject();
+        JsonObject latestUpdate = updateArray.get(0).getAsJsonObject();
+
+        String versionName = latestVersion.get("name").getAsString();
+        int version = Integer.parseInt(versionName.replaceAll("\\.", ""));
+
+        if (version > currentVersion)
+        {
+            String updateTitle = latestUpdate.get("title").getAsString();
+
+            data = new Object[] {versionName, updateTitle};
+            announceUpdate();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * The message to send to players who join
+     */
+    private String updateMessage;
+
+    /**
      * Periodically broadcasts new updates
      */
-    private void announceUpdates()
+    private void announceUpdate()
     {
-        new BukkitRunnable()
+        String[] messages = new String[]
         {
-            @Override
-            public void run()
+            "An update is available:",
+            "Version: " + data[0] + " (current: " + plugin.getDescription().getVersion() + ")",
+            "Title: " + data[1]
+        };
+
+        Logs.info(messages);
+        setUpdateMessage(messages);
+
+        UtilServer.broadcast(Permission.UPDATE_NOTIFICATION, false, updateMessage);
+    }
+
+    private void setUpdateMessage(String[] messages)
+    {
+        for (int i = 0; i < messages.length; i++)
+        {
+            messages[i] = C.PREFIX + messages[i];
+        }
+
+        updateMessage = String.join("\n", messages);
+    }
+
+    /**
+     * Sends the update message to a player
+     *
+     * @param player The player
+     */
+    private void sendUpdateMessage(Player player)
+    {
+        player.sendMessage(updateMessage);
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event)
+    {
+        Player player = event.getPlayer();
+
+        if (Permission.hasPermission(player, Permission.UPDATE_NOTIFICATION))
+        {
+            new BukkitRunnable()
             {
-                if (data != null)
+                @Override
+                public void run()
                 {
-                    Bukkit.getOnlinePlayers().stream().filter(player -> Permission.hasPermission(player, Permission.UPDATE_NOTIFICATION)).forEach(player ->
-                    {
-                        player.sendMessage(C.PREFIX + "An update is available:");
-                        player.sendMessage(C.PREFIX + "Version: " + data[0]);
-                        player.sendMessage(C.PREFIX + "Title: " + data[1]);
-                    });
+                    sendUpdateMessage(player);
                 }
-            }
-        }.runTaskTimer(plugin, UPDATE_CHECK_DELAY + 200L, UPDATE_CHECK_INTERVAL);
+            }.runTaskLater(plugin, 20L);
+        }
     }
 }

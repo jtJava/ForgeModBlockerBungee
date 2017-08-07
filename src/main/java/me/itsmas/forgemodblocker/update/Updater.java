@@ -134,6 +134,12 @@ public class Updater implements Listener
         UtilServer.broadcast(Permission.UPDATE_NOTIFICATION, false, updateMessage);
     }
 
+    /**
+     * Sets the update message
+     *
+     * @see #updateMessage
+     * @param messages The separated messages
+     */
     private void setUpdateMessage(String[] messages)
     {
         for (int i = 0; i < messages.length; i++)

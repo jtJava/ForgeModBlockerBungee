@@ -62,28 +62,6 @@ public final class UtilServer
         Bukkit.getOnlinePlayers().stream().filter(player -> Permission.hasPermission(player, permission)).forEach(player -> player.sendMessage(messages));
     }
 
-    static
-    {
-        String packageName = Bukkit.getServer().getClass().getPackage().getName();
-        serverVersion = packageName.substring(packageName.lastIndexOf(".") + 1);
-    }
-
-    /**
-     * The server version
-     */
-    private static final String serverVersion;
-
-    /**
-     * Fetches the server version
-     *
-     * @see #serverVersion
-     * @return The server version
-     */
-    public static String getServerVersion()
-    {
-        return serverVersion;
-    }
-
     /**
      * Registers a {@link Listener}
      *

@@ -7,5 +7,7 @@ main: me.itsmas.forgemodblocker.ForgeModBlocker
 softdepend: [PlaceholderAPI]
 
 permissions:
+  fmb.*:
+    default: false
   fmb.bypass:
     default: false

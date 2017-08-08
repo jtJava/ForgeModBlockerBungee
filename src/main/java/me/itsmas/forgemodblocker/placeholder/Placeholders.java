@@ -49,7 +49,7 @@ public class Placeholders extends EZPlaceholderHook
                 return "";
             }
 
-            return data.getMods().keySet().stream().collect(Collectors.joining(", "));
+            return data.getMods().stream().collect(Collectors.joining(", "));
         }
 
         return null;

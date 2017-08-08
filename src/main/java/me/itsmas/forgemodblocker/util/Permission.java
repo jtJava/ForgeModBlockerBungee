@@ -8,7 +8,8 @@ import org.bukkit.entity.Player;
 public enum Permission
 {
     ALL("*"),
-    UPDATE_NOTIFICATION("update_notification");
+    UPDATE_NOTIFICATION("update_notification"),
+    BYPASS("bypass");
 
     Permission(String name)
     {

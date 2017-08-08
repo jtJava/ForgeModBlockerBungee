@@ -4,6 +4,7 @@ import me.itsmas.forgemodblocker.ForgeModBlocker;
 import me.itsmas.forgemodblocker.messaging.JoinListener;
 import me.itsmas.forgemodblocker.messaging.MessageListener;
 import me.itsmas.forgemodblocker.util.C;
+import me.itsmas.forgemodblocker.util.Permission;
 import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -145,7 +146,7 @@ public class ModManager
     {
         playerData.put(player, data);
 
-        checkForDisallowed(player, data.getMods().keySet());
+        checkForDisallowed(player, data.getMods());
     }
 
     /**
@@ -156,6 +157,11 @@ public class ModManager
      */
     private void checkForDisallowed(Player player, Set<String> mods)
     {
+        if (Permission.hasPermission(player, Permission.BYPASS))
+        {
+            return;
+        }
+
         Set<String> disallowed = mods.stream().filter(this::isDisallowed).collect(Collectors.toSet());
 
         if (disallowed.size() > 0 || (mods.size() > 0 && blockForge))

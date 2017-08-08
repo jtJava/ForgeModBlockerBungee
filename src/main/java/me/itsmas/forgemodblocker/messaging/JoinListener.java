@@ -1,8 +1,6 @@
 package me.itsmas.forgemodblocker.messaging;
 
-import com.comphenix.protocol.events.PacketContainer;
 import me.itsmas.forgemodblocker.ForgeModBlocker;
-import me.itsmas.forgemodblocker.util.UtilPacket;
 import me.itsmas.forgemodblocker.util.UtilServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,12 +52,7 @@ public class JoinListener implements Listener
      */
     private void sendFmlPacket(Player player, byte... data)
     {
-        PacketContainer packet = UtilPacket.createPayloadPacket("FML|HS", data);
-
-        if (packet != null)
-        {
-            UtilPacket.sendPacket(player, packet);
-        }
+        player.sendPluginMessage(plugin, "FML|HS", data);
     }
 
     @EventHandler

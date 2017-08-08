@@ -2,6 +2,7 @@ package me.itsmas.forgemodblocker.mods;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Data holding a player's mods and their versions
@@ -19,13 +20,13 @@ public class ModData
     }
 
     /**
-     * Fetches the mod ID to version map
+     * Fetches the list of mod IDs
      *
      * @see #mods
-     * @return An immutable map of mod IDs and their versions
+     * @return An immutable set of mod IDs
      */
-    public Map<String, String> getMods()
+    public Set<String> getMods()
     {
-        return Collections.unmodifiableMap(mods);
+        return Collections.unmodifiableSet(mods.keySet());
     }
 }

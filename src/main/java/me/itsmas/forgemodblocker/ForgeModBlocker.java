@@ -5,7 +5,6 @@ import me.itsmas.forgemodblocker.mods.ModManager;
 import me.itsmas.forgemodblocker.placeholder.Placeholders;
 import me.itsmas.forgemodblocker.update.Updater;
 import me.itsmas.forgemodblocker.util.C;
-import me.itsmas.forgemodblocker.versions.VersionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,7 +17,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ForgeModBlocker extends JavaPlugin
 {
-    private VersionManager versionManager;
     private ModManager modManager;
 
     @Override
@@ -38,7 +36,6 @@ public class ForgeModBlocker extends JavaPlugin
         new Metrics(this).addCustomChart(new Metrics.SimplePie("using_placeholderapi", () -> Boolean.toString(placeholderAPI)));
         new Updater(this);
 
-        versionManager = new VersionManager(this);
         modManager = new ModManager(this);
     }
 
@@ -53,11 +50,6 @@ public class ForgeModBlocker extends JavaPlugin
     public <T> T getConfig(String path, Object defaultValue)
     {
         return (T) getConfig().get(path, defaultValue);
-    }
-
-    public VersionManager getVersionManager()
-    {
-        return versionManager;
     }
 
     public ModManager getModManager()

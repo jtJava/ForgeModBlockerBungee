@@ -1,8 +1,11 @@
 name: ForgeModBlocker
-version: 1.1.4
+version: 1.2
 author: Mas281
 
 main: me.itsmas.forgemodblocker.ForgeModBlocker
 
 softdepend: [PlaceholderAPI]
-depend: [ProtocolLib]
+
+permissions:
+  fmb.bypass:
+    default: false

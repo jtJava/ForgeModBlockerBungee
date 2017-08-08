@@ -39,8 +39,6 @@ public final class UtilServer
     public static void broadcast(Permission permission, String... messages)
     {
         broadcast(permission, true, messages);
-
-        Bukkit.getOnlinePlayers().stream().filter(player -> Permission.hasPermission(player, permission)).forEach(player -> player.sendMessage(messages));
     }
 
     /**

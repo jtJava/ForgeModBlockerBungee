@@ -42,7 +42,7 @@ public class Updater implements Listener
     /**
      * The amount of time between update checks
      */
-    private static final long UPDATE_CHECK_INTERVAL = 20L * 60L * 20L;
+    private final long updateCheckInterval;
 
     /**
      * The plugin instance
@@ -58,9 +58,10 @@ public class Updater implements Listener
     {
         this.plugin = plugin;
 
-        UtilServer.registerListener(this);
+        this.updateCheckInterval = 20L * 60L * (long) plugin.getConfig("update-check-interval", 20L);
+        this.currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replaceAll("\\.", ""));
 
-        currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replaceAll("\\.", ""));
+        UtilServer.registerListener(this);
 
         new BukkitRunnable()
         {
@@ -72,7 +73,7 @@ public class Updater implements Listener
                     cancel();
                 }
             }
-        }.runTaskTimerAsynchronously(plugin, UPDATE_CHECK_DELAY, UPDATE_CHECK_INTERVAL);
+        }.runTaskTimerAsynchronously(plugin, UPDATE_CHECK_DELAY, updateCheckInterval);
     }
 
     /**
@@ -87,8 +88,6 @@ public class Updater implements Listener
      */
     private boolean checkUpdates()
     {
-        Logs.info("Checking for updates...");
-
         JsonElement versionElement = UtilHttp.getJsonFromUrl(RESOURCE_VERSIONS);
         JsonElement updateElement = UtilHttp.getJsonFromUrl(RESOURCE_UPDATES);
 

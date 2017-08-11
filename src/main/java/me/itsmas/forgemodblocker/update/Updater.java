@@ -58,7 +58,7 @@ public class Updater implements Listener
     {
         this.plugin = plugin;
 
-        this.updateCheckInterval = 20L * 60L * (long) plugin.getConfig("update-check-interval", 20L);
+        this.updateCheckInterval = 20L * 60L * (int) plugin.getConfig("update-check-interval", 20L);
         this.currentVersion = Integer.parseInt(plugin.getDescription().getVersion().replaceAll("\\.", ""));
 
         UtilServer.registerListener(this);

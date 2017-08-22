@@ -44,7 +44,7 @@ public class Placeholders extends EZPlaceholderHook
         {
             ModData data = plugin.getModManager().getModData(player);
 
-            return data == null ? "" : data.getMods().stream().collect(Collectors.joining(", "));
+            return data == null ? "" : String.join(", ", data.getMods());
         }
 
         return null;

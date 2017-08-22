@@ -39,10 +39,8 @@ public class ModManager
 
         this.blockForge = plugin.getConfig("block-forge", false);
         this.modList = plugin.getConfig("mod-list", new ArrayList<>());
-        this.disallowedCommands = new ArrayList<>();
-
-        List<String> disallowedCommands = plugin.getConfig("disallowed-mods-commands", Lists.newArrayList("kick %player% &cIllegal Mods - %disallowed_mods%"));
-        disallowedCommands.forEach(C::colour);
+        disallowedCommands = plugin.getConfig("disallowed-mods-commands", Lists.newArrayList("kick %player% &cIllegal Mods - %disallowed_mods%"));
+        disallowedCommands.replaceAll(C::colour);
     }
 
     /**

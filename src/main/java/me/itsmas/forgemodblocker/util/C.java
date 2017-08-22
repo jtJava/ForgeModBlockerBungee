@@ -24,7 +24,7 @@ public final class C
 
         ForgeModBlocker plugin = UtilServer.getPlugin();
 
-        PREFIX = ChatColor.translateAlternateColorCodes('&', plugin.getConfig("prefix", "&c[&6FMB&c]&e")) + " ";
+        PREFIX = C.colour(plugin.getConfig("prefix", "&c[&6FMB&c]&e")) + " ";
     }
 
     /**

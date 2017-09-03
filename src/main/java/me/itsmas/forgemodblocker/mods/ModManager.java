@@ -28,7 +28,7 @@ public class ModManager
         new JoinListener(plugin);
         new MessageListener(plugin);
 
-        Mode mode = EnumUtils.getEnum(Mode.class, ((String) plugin.getConfig("mode", "WHITELIST")).toUpperCase());
+        Mode mode = EnumUtils.getEnum(Mode.class, plugin.getConfig().getString("mode").toUpperCase());
 
         if (mode == null)
         {
@@ -39,10 +39,8 @@ public class ModManager
 
         this.blockForge = plugin.getConfig("block-forge", false);
         this.modList = plugin.getConfig("mod-list", new ArrayList<>());
-        this.disallowedCommands = new ArrayList<>();
-
-        List<String> disallowedCommands = plugin.getConfig("disallowed-mods-commands", Lists.newArrayList("kick %player% &cIllegal Mods - %disallowed_mods%"));
-        disallowedCommands.forEach(command -> this.disallowedCommands.add(C.colour(command)));
+        disallowedCommands = plugin.getConfig("disallowed-mods-commands", Lists.newArrayList("kick %player% &cIllegal Mods - %disallowed_mods%"));
+        disallowedCommands.replaceAll(C::colour);
     }
 
     /**
@@ -168,8 +166,8 @@ public class ModManager
         if (disallowed.size() > 0 || (mods.size() > 0 && blockForge))
         {
             // Player is using disallowed mods
-            String modsString = mods.stream().collect(Collectors.joining(", "));
-            String disallowedString = disallowed.stream().collect(Collectors.joining(", "));
+            String modsString = String.join(", ", mods);
+            String disallowedString = String.join(", ", disallowed);
 
             sendDisallowedCommand(player, modsString, disallowedString);
         }

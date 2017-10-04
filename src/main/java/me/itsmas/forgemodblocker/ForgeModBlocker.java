@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Main class for the ForgeModBlocker plugin
  *
  * @author Mas281
- * @version 1.2.4
+ * @version 1.2.5
  * @since 1.0
  */
 public class ForgeModBlocker extends JavaPlugin

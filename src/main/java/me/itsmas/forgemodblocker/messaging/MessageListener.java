@@ -3,10 +3,10 @@ package me.itsmas.forgemodblocker.messaging;
 import me.itsmas.forgemodblocker.ForgeModBlocker;
 import me.itsmas.forgemodblocker.mods.ModData;
 import me.itsmas.forgemodblocker.util.UtilServer;
-import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,64 +27,47 @@ public class MessageListener implements PluginMessageListener
         UtilServer.registerIncomingChannel("FML|HS", this);
     }
 
-    /**
-     * Weird characters which need replacing from the raw mod string
-     */
-    private final String[] weirdChars = {"\u0002", "\u000B", "\u0011", "\u0005", "\u0003", "\u0007", "\u0004", "\u001B", "\u0009", "\f", "\r", "\t", "\n"};
-
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] data)
     {
-        // ModList is the only data sent by forge with >2 length
-        if (data.length > 2)
+        // ModList has ID 2
+        if (data[0] == 2)
         {
-            // Mod data
-            String modString = new String(data);
-            modString = normalizeString(modString);
-
-            ModData modData = getModData(modString);
+            ModData modData = getModData(data);
             plugin.getModManager().addPlayer(player, modData);
         }
     }
 
     /**
-     * Normalizes the mod message string
+     * Fetches a {@link ModData} object from the raw mods data
      *
-     * @param string The input
-     * @return The normalized string
-     */
-    private String normalizeString(String string)
-    {
-        for (String character : weirdChars)
-        {
-            string = string.replace(character, " ");
-        }
-
-        return StringUtils.normalizeSpace(string.trim());
-    }
-
-    /**
-     * Fetches a {@link ModData} object from the raw mods string
-     *
-     * @param string The input
+     * @param data The input data
      * @return A ModData object
      */
-    private ModData getModData(String string)
+    private ModData getModData(byte[] data)
     {
         Map<String, String> mods = new HashMap<>();
-        String lastMod = "";
 
-        int i = -1;
-        for (String info : string.split(" "))
+        boolean store = false;
+        String tempName = null;
+
+        for (int i = 2; i < data.length; store = !store)
         {
-            if (++i % 2 == 0)
+            int end = i + data[i] + 1;
+            byte[] range = Arrays.copyOfRange(data, i + 1, end);
+
+            String string = new String(range);
+
+            if (store)
             {
-                lastMod = info;
+                mods.put(tempName, string);
             }
             else
             {
-                mods.put(lastMod, info);
+                tempName = string;
             }
+
+            i = end;
         }
 
         return new ModData(mods);

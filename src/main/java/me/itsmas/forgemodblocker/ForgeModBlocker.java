@@ -7,6 +7,7 @@ import me.itsmas.forgemodblocker.update.Updater;
 import me.itsmas.forgemodblocker.util.C;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 /**
  * Main class for the ForgeModBlocker plugin
@@ -37,6 +38,20 @@ public class ForgeModBlocker extends JavaPlugin
         new Updater(this);
 
         modManager = new ModManager(this);
+    }
+
+    @Override
+    public void onDisable()
+    {
+        destroyTasks();
+    }
+
+    /**
+     * Cancels all ongoing plugin tasks
+     */
+    private void destroyTasks()
+    {
+        Bukkit.getScheduler().getPendingTasks().stream().filter(task -> task.getOwner() == this).forEach(BukkitTask::cancel);
     }
 
     /**

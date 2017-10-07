@@ -23,6 +23,8 @@ mod-list:
 # %player% - The player using disallowed mods
 # %mods% - All the mods the player is using
 # %disallowed_mods% - The disallowed mods the player is using
+# To kick a player from BungeeCord, use "[bungeekick]" as the command without the %player% placeholder
+# Example: - "[bungeekick] &cIllegal Mods - %disallowed_mods%"
 disallowed-mods-commands:
 - "kick %player% &cIllegal Mods - %disallowed_mods%"
 

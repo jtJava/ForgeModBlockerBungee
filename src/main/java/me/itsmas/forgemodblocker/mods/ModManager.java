@@ -6,6 +6,8 @@ import me.itsmas.forgemodblocker.messaging.JoinListener;
 import me.itsmas.forgemodblocker.messaging.MessageListener;
 import me.itsmas.forgemodblocker.util.C;
 import me.itsmas.forgemodblocker.util.Permission;
+import me.itsmas.forgemodblocker.util.UtilServer;
+import me.itsmas.forgemodblocker.util.UtilString;
 import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -179,14 +181,25 @@ public class ModManager
     private void sendDisallowedCommand(Player player, String mods, String disallowedMods)
     {
         disallowedCommands.forEach(command ->
-                Bukkit.dispatchCommand(
-                    Bukkit.getConsoleSender(),
-                    command
-                            .replace("%player%", player.getName())
-                            .replace("%mods%", mods)
-                            .replace("%disallowed_mods%", disallowedMods)
-            )
-        );
+        {
+            String[] args = command.split(" ");
+
+            if (args[0].equalsIgnoreCase("[bungeekick]"))
+            {
+                String reason = UtilString.combine(args, 1);
+                reason = formatCommand(reason, player, mods, disallowedMods);
+
+                UtilServer.writeBungee("KickPlayer", player.getName(), reason);
+                return;
+            }
+
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formatCommand(command, player, mods, disallowedMods));
+        });
+    }
+
+    private String formatCommand(String command, Player player, String mods, String disallowedMods)
+    {
+        return command.replace("%player%", player.getName()).replace("mods", mods).replace("%disallowed_mods%", disallowedMods);
     }
 
     /**

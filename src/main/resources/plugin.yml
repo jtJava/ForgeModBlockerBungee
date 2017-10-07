@@ -1,5 +1,5 @@
 name: ForgeModBlocker
-version: 1.2.7
+version: 1.2.8
 
 author: Mas281
 authors: [Mas281, Okx]
@@ -10,6 +10,10 @@ website: https://www.spigotmc.org/resources/forgemodblocker.45220/
 main: me.itsmas.forgemodblocker.ForgeModBlocker
 
 softdepend: [PlaceholderAPI]
+
+commands:
+  mods:
+    aliases: [modlist]
 
 permissions:
   fmb.*:

@@ -32,3 +32,12 @@ disallowed-mods-commands:
 # Set this to the number of minutes you want in between update checks
 # Default: 20
 update-check-interval: 20
+
+# Configurable messages
+messages:
+  no_permission: "&cYou don't have permission"
+  mods_command_usage: "&cUsage: /mods <player>"
+  player_offline: "&cThat player is not online"
+  player_not_using_forge: "&e%s is not using Forge" # Placeholders: player name
+  player_mods: "&a%s is using the following mods:" # Placeholders: player name
+  mods_format: "&e%s &7- &aVersion: &e%s" # Placeholders: mod name, mod version

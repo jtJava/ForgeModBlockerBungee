@@ -1,6 +1,6 @@
 package me.itsmas.forgemodblocker.util;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 /**
  * Permission nodes for the plugin
@@ -9,7 +9,8 @@ public enum Permission
 {
     ALL("*"),
     UPDATE_NOTIFICATION("update_notification"),
-    BYPASS("bypass");
+    BYPASS("bypass"),
+    MODS_COMMAND("mods_command");
 
     Permission(String name)
     {
@@ -22,14 +23,14 @@ public enum Permission
     private final String node;
 
     /**
-     * Determines whether a player has a {@link Permission}
+     * Determines whether a {@link CommandSender} has a {@link Permission}
      *
-     * @param player The player
+     * @param sender The sender
      * @param permission The permission
-     * @return Whether the player has the permission
+     * @return Whether the sender has the permission
      */
-    public static boolean hasPermission(Player player, Permission permission)
+    public static boolean hasPermission(CommandSender sender, Permission permission)
     {
-        return player.hasPermission(permission.node);
+        return sender.hasPermission(permission.node);
     }
 }

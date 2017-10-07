@@ -1,10 +1,12 @@
 package me.itsmas.forgemodblocker;
 
+import me.itsmas.forgemodblocker.command.ModsCommand;
 import me.itsmas.forgemodblocker.metrics.Metrics;
 import me.itsmas.forgemodblocker.mods.ModManager;
 import me.itsmas.forgemodblocker.placeholder.Placeholders;
 import me.itsmas.forgemodblocker.update.Updater;
 import me.itsmas.forgemodblocker.util.C;
+import me.itsmas.forgemodblocker.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -26,6 +28,7 @@ public class ForgeModBlocker extends JavaPlugin
         saveDefaultConfig();
 
         C.setPrefix();
+        Message.init(this);
 
         boolean placeholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 
@@ -33,6 +36,8 @@ public class ForgeModBlocker extends JavaPlugin
         {
             new Placeholders(this);
         }
+
+        getCommand("mods").setExecutor(new ModsCommand(this));
 
         new Metrics(this).addCustomChart(new Metrics.SimplePie("using_placeholderapi", () -> Boolean.toString(placeholderAPI)));
         new Updater(this);

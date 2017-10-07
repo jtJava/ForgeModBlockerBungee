@@ -29,4 +29,15 @@ public class ModData
     {
         return Collections.unmodifiableSet(mods.keySet());
     }
+
+    /**
+     * Fetches the mods map
+     *
+     * @see #mods
+     * @return The mods map
+     */
+    public Map<String, String> getModsMap()
+    {
+        return Collections.unmodifiableMap(mods);
+    }
 }

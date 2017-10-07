@@ -182,24 +182,34 @@ public class ModManager
     {
         disallowedCommands.forEach(command ->
         {
+            command = formatCommand(command, player, mods, disallowedMods);
+
             String[] args = command.split(" ");
 
             if (args[0].equalsIgnoreCase("[bungeekick]"))
             {
                 String reason = UtilString.combine(args, 1);
-                reason = formatCommand(reason, player, mods, disallowedMods);
-
                 UtilServer.writeBungee("KickPlayer", player.getName(), reason);
+
                 return;
             }
 
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formatCommand(command, player, mods, disallowedMods));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
         });
     }
 
+    /**
+     * Formats a command using placeholders
+     *
+     * @param command The command to be executed
+     * @param player The player to substitute
+     * @param mods The mods the player is using
+     * @param disallowedMods The disallowed mods the player is using
+     * @return The formatted command
+     */
     private String formatCommand(String command, Player player, String mods, String disallowedMods)
     {
-        return command.replace("%player%", player.getName()).replace("mods", mods).replace("%disallowed_mods%", disallowedMods);
+        return command.replace("%player%", player.getName()).replace("%mods%", mods).replace("%disallowed_mods%", disallowedMods);
     }
 
     /**

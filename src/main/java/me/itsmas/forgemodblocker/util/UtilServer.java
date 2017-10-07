@@ -1,13 +1,14 @@
 package me.itsmas.forgemodblocker.util;
 
+import com.google.common.collect.Iterables;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import me.itsmas.forgemodblocker.ForgeModBlocker;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * Server utility methods
@@ -94,5 +95,31 @@ public final class UtilServer
     public static void registerIncomingChannel(String channel, PluginMessageListener messageListener)
     {
         Bukkit.getMessenger().registerIncomingPluginChannel(plugin, channel, messageListener);
+    }
+
+    /**
+     * Forwards a message to BungeeCord through the plugin messaging channel
+     *
+     * @param args The data to send
+     */
+    public static void writeBungee(String... args)
+    {
+        assert args.length > 0 : "Args length must be at least 1";
+
+        Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+
+        if (player == null)
+        {
+            return;
+        }
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        for (String arg : args)
+        {
+            out.writeUTF(arg);
+        }
+
+        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
     }
 }

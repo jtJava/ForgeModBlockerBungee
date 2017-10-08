@@ -14,7 +14,8 @@ public enum Message
     PLAYER_OFFLINE,
     PLAYER_NOT_USING_FORGE,
     PLAYER_MODS,
-    MODS_FORMAT;
+    MODS_FORMAT,
+    PLUGIN_RELOADED;
 
     private String msg;
 
@@ -49,10 +50,9 @@ public enum Message
      */
     public static void send(CommandSender sender, Message message, Object... params)
     {
-        if (!message.value().isEmpty())
-        {
-            sender.sendMessage(String.format(message.value(), params));
-        }
+        String msg = message.value() == null ? message.name() : message.value();
+
+        sender.sendMessage(String.format(msg, params));
     }
 
     /**

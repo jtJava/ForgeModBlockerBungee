@@ -41,3 +41,4 @@ messages:
   player_not_using_forge: "&e%s is not using Forge" # Placeholders: player name
   player_mods: "&a%s is using the following mods:" # Placeholders: player name
   mods_format: "&e%s &7- &aVersion: &e%s" # Placeholders: mod name, mod version
+  plugin_reloaded: "&aPlugin reloaded"

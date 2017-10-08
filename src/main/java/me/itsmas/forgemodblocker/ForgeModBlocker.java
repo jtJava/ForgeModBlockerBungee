@@ -1,5 +1,6 @@
 package me.itsmas.forgemodblocker;
 
+import me.itsmas.forgemodblocker.command.MainCommand;
 import me.itsmas.forgemodblocker.command.ModsCommand;
 import me.itsmas.forgemodblocker.metrics.Metrics;
 import me.itsmas.forgemodblocker.mods.ModManager;
@@ -26,9 +27,7 @@ public class ForgeModBlocker extends JavaPlugin
     public void onEnable()
     {
         saveDefaultConfig();
-
-        C.setPrefix();
-        Message.init(this);
+        initConfig();
 
         boolean placeholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 
@@ -37,6 +36,7 @@ public class ForgeModBlocker extends JavaPlugin
             new Placeholders(this);
         }
 
+        getCommand("fmb").setExecutor(new MainCommand(this));
         getCommand("mods").setExecutor(new ModsCommand(this));
 
         new Metrics(this).addCustomChart(new Metrics.SimplePie("using_placeholderapi", () -> Boolean.toString(placeholderAPI)));
@@ -49,6 +49,26 @@ public class ForgeModBlocker extends JavaPlugin
     public void onDisable()
     {
         destroyTasks();
+    }
+
+    /**
+     * Reloads the plugin
+     */
+    public void reload()
+    {
+        reloadConfig();
+
+        initConfig();
+        getModManager().loadConfigValues();
+    }
+
+    /**
+     * Initialises caching of config values
+     */
+    private void initConfig()
+    {
+        C.setPrefix();
+        Message.init(this);
     }
 
     /**

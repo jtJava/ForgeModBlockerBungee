@@ -1,5 +1,5 @@
 name: ForgeModBlocker
-version: 1.2.9
+version: 1.3.0
 
 author: Mas281
 authors: [Mas281, Okx]
@@ -12,6 +12,8 @@ main: me.itsmas.forgemodblocker.ForgeModBlocker
 softdepend: [PlaceholderAPI]
 
 commands:
+  fmb:
+    aliases: [forgemodblocker, modblocker]
   mods:
     aliases: [modlist]
 
@@ -21,7 +23,8 @@ permissions:
     children:
       fmb.bypass: true
       fmb.update_notification: true
+      fmb.main_command: true
+      fmb.reload_command: true
+      fmb.mods_command: true
   fmb.bypass:
     default: false
-  fmb.update_notification:
-    default: op

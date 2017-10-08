@@ -25,20 +25,42 @@ import java.util.stream.Collectors;
  */
 public class ModManager
 {
+    /**
+     * The plugin instance
+     */
+    private final ForgeModBlocker plugin;
+
     public ModManager(ForgeModBlocker plugin)
     {
+        this.plugin = plugin;
+
         new JoinListener(plugin);
         new MessageListener(plugin);
 
+        loadConfigValues();
+    }
+
+    /**
+     * Loads needed configuration values
+     */
+    public void loadConfigValues()
+    {
+        loadMode();
+
+        blockForge = plugin.getConfig("block-forge", false);
+        modList = plugin.getConfig("mod-list", new ArrayList<>());
+
+        disallowedCommands = plugin.getConfig("disallowed-mods-commands", Lists.newArrayList("kick %player% &cIllegal Mods - %disallowed_mods%"));
+        disallowedCommands.replaceAll(C::colour);
+    }
+
+    /**
+     * Loads the whitelist/blacklist mode
+     */
+    private void loadMode()
+    {
         Mode mode = EnumUtils.getEnum(Mode.class, ((String) plugin.getConfig("mode")).toUpperCase());
-
         this.mode = mode == null ? Mode.BLACKLIST : mode;
-
-        this.blockForge = plugin.getConfig("block-forge", false);
-        this.modList = plugin.getConfig("mod-list", new ArrayList<>());
-
-        this.disallowedCommands = plugin.getConfig("disallowed-mods-commands", Lists.newArrayList("kick %player% &cIllegal Mods - %disallowed_mods%"));
-        this.disallowedCommands.replaceAll(C::colour);
     }
 
     /**
@@ -77,7 +99,7 @@ public class ModManager
     /**
      * The mode the plugin is running in
      */
-    private final Mode mode;
+    private Mode mode;
 
     /**
      * Determines whether a mod is disallowed
@@ -93,17 +115,17 @@ public class ModManager
     /**
      * Whether to block all Forge clients
      */
-    private final boolean blockForge;
+    private boolean blockForge;
 
     /**
      * The list of whitelisted/blacklisted mods
      */
-    private final List<String> modList;
+    private List<String> modList;
 
     /**
      * The commands to execute on players using disallowed mods
      */
-    private final List<String> disallowedCommands;
+    private List<String> disallowedCommands;
 
     /**
      * Map of players to their {@link ModData} object

@@ -19,7 +19,7 @@ public final class UtilHttp
     /**
      * The user agent
      */
-    private static final String USER_AGENT = "ForgeModBlocker";
+    public static final String USER_AGENT = "ForgeModBlocker";
 
     /**
      * The {@link JsonParser}

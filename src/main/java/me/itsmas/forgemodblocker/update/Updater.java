@@ -188,12 +188,7 @@ public class Updater implements Listener
     /**
      * The location of the latest plugin jar
      */
-    private final String fileAddress = "https://itsmas.me/files/ForgeModBlocker.jar";
-
-    /**
-     * The user agent to use for HTTP requests when downloading updates
-     */
-    private final String userAgent = "Mozilla/5.0";
+    private final String fileAddress = "https://api.spiget.org/v2/resources/ForgeModBlocker/download";
 
     /**
      * Attempts to download the latest plugin update
@@ -217,7 +212,7 @@ public class Updater implements Listener
             URL updateUrl = new URL(fileAddress);
             HttpURLConnection connection = (HttpURLConnection) updateUrl.openConnection();
 
-            connection.setRequestProperty("User-Agent", userAgent);
+            connection.setRequestProperty("User-Agent", UtilHttp.USER_AGENT);
 
             FileUtils.copyInputStreamToFile(connection.getInputStream(), pluginFile);
 
@@ -232,7 +227,7 @@ public class Updater implements Listener
         }
         catch (IOException ex)
         {
-            Logs.info("Update download failed!");
+            Logs.severe("Update download failed");
             UtilServer.broadcast(Permission.UPDATE_NOTIFICATION, ChatColor.RED + "Update download failed");
 
             ex.printStackTrace();

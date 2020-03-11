@@ -3,8 +3,8 @@ package me.jaden.forgemodblocker.messaging;
 import java.util.concurrent.TimeUnit;
 import me.jaden.forgemodblocker.ModBlockerBungeePlugin;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
-import net.md_5.bungee.api.event.ServerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
@@ -48,9 +48,7 @@ public class JoinListener implements Listener {
     }
 
     @EventHandler
-    public void onQuit(ServerDisconnectEvent event) {
-        if (event.getTarget() == null) {
-            plugin.getModManager().removePlayer(event.getPlayer());
-        }
+    public void onQuit(PlayerDisconnectEvent event) {
+        plugin.getModManager().removePlayer(event.getPlayer());
     }
 }

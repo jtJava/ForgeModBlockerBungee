@@ -1,15 +1,13 @@
 name: ForgeModBlocker
-version: 1.3.1
+version: 1.0.0
 
-author: Mas281
+author: Iowa
 authors: [Mas281, Okx]
 
 description: Control which mods your players can use
-website: https://www.spigotmc.org/resources/forgemodblocker.45220/
+website: https://www.spigotmc.org/resources/forgemodblocker-for-bungee.75970/
 
 main: me.jaden.forgemodblocker.ModBlockerBungeePlugin
-
-softdepend: [PlaceholderAPI]
 
 commands:
   fmb:

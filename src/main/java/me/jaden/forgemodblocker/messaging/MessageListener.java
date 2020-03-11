@@ -28,9 +28,6 @@ public class MessageListener implements Listener {
     public void onPluginMessageReceived(PluginMessageEvent event) {
         if (event.getTag().equalsIgnoreCase("FML|HS")) {
             if (event.getData()[0] == 2) {
-                System.out.println(event.getReceiver());
-                System.out.println(event.getSender());
-
                 ModData modData = getModData(event.getData());
                 plugin.getModManager().addPlayer((ProxiedPlayer) event.getSender(), modData);
             }

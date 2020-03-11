@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Arrays;
 import lombok.Getter;
 import me.jaden.forgemodblocker.command.MainCommand;
 import me.jaden.forgemodblocker.command.ModsCommand;
@@ -39,8 +40,8 @@ public class ModBlockerBungeePlugin extends Plugin {
         reloadConfig();
         initConfig();
 
-        getProxy().getPluginManager().registerCommand(this, new MainCommand(this));
-        getProxy().getPluginManager().registerCommand(this, new ModsCommand(this));
+        Arrays.asList(new MainCommand(this), new ModsCommand(this))
+                .forEach(command -> getProxy().getPluginManager().registerCommand(this, command));
 
         modManager = new ModManager(this);
     }

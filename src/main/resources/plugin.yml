@@ -7,7 +7,7 @@ authors: [Mas281, Okx]
 description: Control which mods your players can use
 website: https://www.spigotmc.org/resources/forgemodblocker.45220/
 
-main: me.itsmas.forgemodblocker.ForgeModBlocker
+main: me.jaden.forgemodblocker.ModBlockerBungeePlugin
 
 softdepend: [PlaceholderAPI]
 

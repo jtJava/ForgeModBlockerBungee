@@ -1,14 +1,14 @@
-package me.itsmas.forgemodblocker.util;
+package me.jaden.forgemodblocker.util;
 
-import me.itsmas.forgemodblocker.ForgeModBlocker;
-import org.bukkit.ChatColor;
+import lombok.experimental.UtilityClass;
+import me.jaden.forgemodblocker.ModBlockerBungeePlugin;
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * Chat and formatting utilities
  */
-public final class C
-{
-    private C(){}
+@UtilityClass
+public final class C {
 
     /**
      * The plugin prefix
@@ -18,11 +18,10 @@ public final class C
     /**
      * Sets the plugin prefix
      */
-    public static void setPrefix()
-    {
+    public static void setPrefix() {
         assert PREFIX == null : "Prefix is already set";
 
-        ForgeModBlocker plugin = UtilServer.getPlugin();
+        ModBlockerBungeePlugin plugin = UtilServer.getPlugin();
 
         PREFIX = C.colour(plugin.getConfig("prefix", "&c[&6FMB&c]&e")) + " ";
     }
@@ -33,8 +32,7 @@ public final class C
      * @param string The string to colour
      * @return The coloured string
      */
-    public static String colour(String string)
-    {
+    public static String colour(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 }

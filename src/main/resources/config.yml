@@ -15,7 +15,7 @@ mode: blacklist
 # You must use the mod ID of the mods you wish to use on this list
 # To find a mod ID, open Forge with the mod installed, click "Mods" on the title screen, find the mod and look at the "Mod ID" field
 mod-list:
-- examplemod
+  - examplemod
 
 # The commands to execute when a player joins with disallowed mods
 # Supports colour codes
@@ -26,7 +26,7 @@ mod-list:
 # To kick a player from BungeeCord, use "[bungeekick]" as the command without the %player% placeholder
 # Example: - "[bungeekick] &cIllegal Mods - %disallowed_mods%"
 disallowed-mods-commands:
-- "kick %player% &cIllegal Mods - %disallowed_mods%"
+  - "kick %player% &cIllegal Mods - %disallowed_mods%"
 
 # ForgeModBlocker will periodically check for plugin updates and attempt to download them
 # Set this to the number of minutes you want in between update checks

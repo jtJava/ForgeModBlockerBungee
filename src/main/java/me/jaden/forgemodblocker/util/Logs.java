@@ -1,36 +1,34 @@
-package me.itsmas.forgemodblocker.util;
+package me.jaden.forgemodblocker.util;
 
 import java.util.Arrays;
 import java.util.logging.Logger;
+import lombok.experimental.UtilityClass;
 
 /**
  * Logging utility methods
  */
-public final class Logs
-{
-    private Logs(){}
+@UtilityClass
+public final class Logs {
+
 
     /**
      * @see Logger#info(String)
      */
-    public static void info(String msg)
-    {
+    public static void info(String msg) {
         UtilServer.getPlugin().getLogger().info(msg);
     }
 
     /**
      * @see #info(String)
      */
-    public static void info(String... messages)
-    {
+    public static void info(String... messages) {
         Arrays.stream(messages).forEach(Logs::info);
     }
 
     /**
      * @see Logger#severe(String)
      */
-    public static void severe(String msg)
-    {
+    public static void severe(String msg) {
         UtilServer.getPlugin().getLogger().severe(msg);
     }
 }

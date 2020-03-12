@@ -13,9 +13,14 @@ public class ModData {
      */
     private final Map<String, String> mods;
 
-    public ModData(Map<String, String> mods) {
+    private final byte[] modsAsByteArray;
+
+
+    public ModData(Map<String, String> mods, byte[] bytes) {
         this.mods = mods;
+        this.modsAsByteArray = bytes;
     }
+
 
     /**
      * Fetches the list of mod IDs
@@ -35,5 +40,9 @@ public class ModData {
      */
     public Map<String, String> getModsMap() {
         return Collections.unmodifiableMap(mods);
+    }
+
+    public byte[] getModsAsByteArray() {
+        return modsAsByteArray;
     }
 }

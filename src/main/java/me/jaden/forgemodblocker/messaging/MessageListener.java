@@ -22,14 +22,18 @@ public class MessageListener implements Listener {
     public MessageListener(ModBlockerBungeePlugin plugin) {
         this.plugin = plugin;
         plugin.getProxy().getPluginManager().registerListener(plugin, this);
+        plugin.getProxy().registerChannel("FMB|ML");
     }
 
     @EventHandler
     public void onPluginMessageReceived(PluginMessageEvent event) {
         if (event.getTag().equalsIgnoreCase("FML|HS")) {
             if (event.getData()[0] == 2) {
+                // 1st byte = modid, 2nd byte = version, 3rd byte modid etc
+
                 ModData modData = getModData(event.getData());
                 plugin.getModManager().addPlayer((ProxiedPlayer) event.getSender(), modData);
+                ((ProxiedPlayer) event.getSender()).getServer().sendData("FMB|ML", modData.getModsAsByteArray());
             }
         }
     }
@@ -61,6 +65,6 @@ public class MessageListener implements Listener {
             i = end;
         }
 
-        return new ModData(mods);
+        return new ModData(mods, data);
     }
 }

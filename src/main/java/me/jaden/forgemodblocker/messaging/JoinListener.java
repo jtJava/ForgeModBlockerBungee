@@ -34,7 +34,7 @@ public class JoinListener implements Listener {
                 sendFmlPacket(player, (byte) -2, (byte) 0);
                 sendFmlPacket(player, (byte) 0, (byte) 2, (byte) 0, (byte) 0, (byte) 0, (byte) 0);
             }
-        }, 2, TimeUnit.SECONDS);
+        }, 1, TimeUnit.SECONDS);
     }
 
     /**
